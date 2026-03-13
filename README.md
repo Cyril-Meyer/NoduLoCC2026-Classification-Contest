@@ -9,7 +9,7 @@ Weights used for the evaluation are available on Zenodo : https://zenodo.org/rec
 ## What is the method idea ?
 
 We use existing backbones from `tf.keras.applications`, add them a classification head a train them using cross entropy.
-The best and last models are saved.
+The best and last models are both saved.
 We select best model using a part of the training dataset reserved for this usage (validation set) which correspond to random 5% of the train set and keep best model on validation loss.
 
 We then selected the best resulting models and use them as an ensemble to classify inputs.
@@ -32,13 +32,15 @@ All the code has been put in jupyter notebooks.
     * Batch size = 4, 8 or 16 depending on model parameters number
 * Use `TF2-Pred.ipynb` to select models to keep
 * `CM-Eval.ipynb` is provided for final prediction with example on the training dataset for the organizers.
+  * 4 models are used as an ensemble
   * The ensemble strategy is made to maximize detection of nodule which seems more important in a medical assisting idea.
+    * Decision = average of 4 model > 25% ?
 
 
 ## How to use it for the evaluation part ? A.K.A. the section for the contest organizers.
 
 As no evaluation script where provided, I wrote a single function `predict` in the notebook `CM-Eval.ipynb`.
-This function take an original image as provided in the contest, preprocess it, predict the class and return a boolean with the prediction.
+This function take an original image as provided in the contest, preprocess it, predict the class and return a boolean with the prediction and a confidence score (with also raw predictions).
 
 
 ## Is it good code ?
@@ -63,7 +65,7 @@ Thanks to the NoduLoCC2026 challenge organizer, especially **Adnan Mustafic** wh
 ## Misc
 
 <details>
-  <summary>`pip freeze`</summary>
+  <summary>requirements.txt</summary>
 
 ````
 absl-py==2.2.2
